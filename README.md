@@ -50,6 +50,8 @@ SwiftNet semantic segmentation baseline:
 |-------|---------------|
 | 65.02 | [model](https://drive.google.com/drive/folders/1m433jSb2A5AVXrEBE7UUMp79mkExhHn1?usp=share_link)     |
 
+The following two tables include numbers for the Pearson correlation as reported in the paper.
+
 SwiftNet-based reconstruction decoder models:
 
 | Reconstruction Decoder | Lat. | SPP | Clean | FGSM | PGD  | Gaussian | S&P   | all | Download link                                                                                     |
@@ -69,6 +71,9 @@ ResNet-based reconstruction decoder models:
 
 
 ## Prerequisites and Requirements
+First, clone this repository.
+
+#### Environment
 To install the environment from scratch, follow the following steps:
 ```
 conda create --name swiftnet-pp python=3.7.12
@@ -90,6 +95,13 @@ pip install "git+https://github.com/ifnspaml/TUBSRobustCheck.git"
 ```
 
 For reference: The `environment.yml` was created by exporting the environment via `conda env export > environment.yml` on our Linux cluster.
+
+#### Data Preparation
+We use a similar dataloader as in [AdvAttackDet](https://github.com/ifnspaml/AdvAttackDet) which builds on [IFN_Dataloader](https://github.com/ifnspaml/IFN_Dataloader).
+Please refer to [AdvAttackDet](https://github.com/ifnspaml/AdvAttackDet) Prerequisites and Requirements section to prepare the datasets ``cityscapes`` and ``kitti_2015``.
+Both are used in our experiments.
+
+Further, if you don't want to pre-generate train ID segmentation labels (i.e., mapping the segmentation label IDs to a form suitable for training) or struggle with the process described [here](https://github.com/ifnspaml/IFN_Dataloader/tree/master/dataloader/file_io), you can set keys_to_load=('color', 'segmentation') and labels_mode='fromid' in the respective scripts.
 
 ## Training
 For training according to our method, please first use `train_swiftnet.py` (training SwiftNet for semantic segmentation) and then `train_swiftnet_rec.py` (loading a trained SwiftNet for semantic segmentation (frozen weights) and train an additional reconstruction decoder).
